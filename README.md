@@ -1,29 +1,24 @@
-# simple-di
+# simple-container
 
-Zero deps simple di container
+Zero deps container
 
 ## Usage
 
 ```js
 import SimpleContainer from '@skbkontur/SimpleContainer'
 
-class Hebrew {
-  contructor({ httpClient, log }) {
-    this._httpClient = httpClient
-    this._log = log
-  }
-
+const hebrewFactory = ({ httpClient, log }) => ({
   async brew() {
     try {
-      await this._httpClient('/api/brew')
+      await httpClient('/api/brew')
     } catch (ex) {
-      this._log.error(ex)
+      log.error(ex)
     }
   }
-}
+})
 
 const container = new SimpleContainer()
-  .registerClass('hebrew', Hebrew)
+  .registerFactory('hebrew', hebrewFactory)
   .registerValue('httpClient', fetch.bind(global))
   .registerValue('log', console)
 
