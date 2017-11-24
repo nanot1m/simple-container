@@ -1,0 +1,10 @@
+// @flow
+
+declare class SimpleContainer<Deps = {}> {
+  registerValue<T>(name: string, value: T): this;
+  registerClass<T>(name: string, klass: Class<T>): this;
+  registerFactory<T: Function>(name: string, factory: T): this;
+  resolve<T>(name: string): T;
+}
+
+export default SimpleContainer
