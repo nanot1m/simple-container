@@ -9,7 +9,11 @@
   "scripts": {
     "test": "jest",
     "build": "babel src --out-dir lib --ignore test.js --copy-files",
-    "prepublish": "npm test && npm run build"
+    "prepublish": "npm test && npm run build",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js}": ["prettier --write", "git add"]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
