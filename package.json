@@ -10,8 +10,14 @@
     "test": "jest",
     "build": "babel src --out-dir lib --ignore test.js --copy-files",
     "prepublish": "npm test && npm run build",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "size": "size-limit"
   },
+  "size-limit": [
+    {
+      "path": "lib/index"
+    }
+  ],
   "lint-staged": {
     "*.{js}": ["prettier --write", "git add"]
   },
@@ -23,6 +29,7 @@
     "husky": "^0.14.3",
     "jest": "^21.2.1",
     "lint-staged": "^5.0.0",
-    "prettier": "^1.8.2"
+    "prettier": "^1.8.2",
+    "size-limit": "^0.13.2"
   }
 }
