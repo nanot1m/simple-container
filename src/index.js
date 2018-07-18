@@ -20,16 +20,19 @@ class SimpleContainer {
   constructor() {
     this._container = new Map()
     this._resolvedItems = new Map()
-    this.cradle = new Proxy(
-      {},
-      {
-        get: (target, property) => this.resolve(property)
-      }
-    )
+    this.cradle = {}
+  }
+
+  setItem(name, item) {
+    this._container.set(name, item)
+    Object.defineProperty(this.cradle, name, {
+      get: () => this.resolve(name)
+    })
+    return this
   }
 
   registerClass<T>(name: string, Class: Class<T>) {
-    this._container.set(name, {
+    this.setItem(name, {
       type: ItemType.Class,
       item: Class
     })
@@ -37,7 +40,7 @@ class SimpleContainer {
   }
 
   registerFactory<T: Function>(name: string, func: T) {
-    this._container.set(name, {
+    this.setItem(name, {
       type: ItemType.Function,
       item: func
     })
@@ -45,7 +48,7 @@ class SimpleContainer {
   }
 
   registerValue<T>(name: string, value: T) {
-    this._container.set(name, {
+    this.setItem(name, {
       type: ItemType.Value,
       item: value
     })
